@@ -24,3 +24,7 @@ Canal工作原理
       2）mysql master收到dump请求，开始推送binary log给slave（也就是canal）
       3）canal解析binary log对象。
 </pre>
+
+利用binlog结合canal恢复数据
+
+![](https://i.imgur.com/qSmFMMl.png)

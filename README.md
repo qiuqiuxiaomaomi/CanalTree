@@ -28,3 +28,28 @@ Canal工作原理
 利用binlog结合canal恢复数据
 
 ![](https://i.imgur.com/qSmFMMl.png)
+
+<pre>
+解析：
+      Camus:
+           是Linkedin开源的一个从Kafka到HDFS的数据管道，实际上它是一个MapReduce作业。
+
+      Camus作业三个阶段：
+           1）Setup Stage:
+                    从Kafka的Zookeeper获取可用的topics,partions,offset等元信息（metadata）
+           2) Hadoop Job Stage:
+                    开始用若干个task执行topic的数据获取，并写到HDFS
+           3) Cleanup Stage：
+
+      Hadoop Stage:
+           1) Pulling the data:
+                   根据Setup Stage的数据建立Kafka请求，拉取数据，每个task都生成4个文件：
+                          Avro data files,
+                          Count statistics files,
+                          Updated offset files,
+                          Error files
+           2) Committing the data
+                   当一个task完成时，其拉取的数据都被提交到output目录。
+           3）Stroring the offset
+                   每个partition都有offset，这些offset信息存储在HDFS中。
+</pre>
